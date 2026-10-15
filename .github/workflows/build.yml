@@ -7,10 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: jarvis.zip aç
+      - name: Projeyi hazırla
         run: |
+          echo "Repodaki dosyalar:"
+          ls -la
+          Z=$(find . -maxdepth 2 -iname '*.zip' | head -n 1)
+          echo "Bulunan zip: $Z"
+          if [ -z "$Z" ]; then echo "HATA: Repoda zip yok"; exit 1; fi
           mkdir proj
-          unzip -o jarvis.zip -d proj
+          unzip -o "$Z" -d proj
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
